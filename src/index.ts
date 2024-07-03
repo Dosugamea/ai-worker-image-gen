@@ -33,9 +33,19 @@ export default {
 		promptWords.push(randomString);
 
 		// generate image
-		const response = await env.AI.run('@cf/lykon/dreamshaper-8-lcm', {
-			prompt: promptWords.join(', '),
-		});
+		const response = await env.AI.run(
+			'@cf/lykon/dreamshaper-8-lcm',
+			{
+				prompt: promptWords.join(', '),
+			},
+			{
+				gateway: {
+					id: 'star-api',
+					skipCache: false,
+					cacheTtl: 3000,
+				},
+			}
+		);
 
 		return new Response(response, {
 			headers: {
